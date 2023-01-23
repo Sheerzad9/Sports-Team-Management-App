@@ -26,7 +26,9 @@ loginRouter.post("/", async (req, res) => {
       expiresIn: "1h",
     });
 
-    return res.status(200).json({ message: "Login successfully!", token });
+    return res
+      .status(200)
+      .json({ message: "Login successfully!", token, user });
   }
 
   // else we get here and the password is wrong

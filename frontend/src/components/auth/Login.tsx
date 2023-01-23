@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../reducers/UserReducer";
+import { AppDispatch } from "../../store";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { handleUserLogin } from "../../reducers/UserReducer";
 
 const Login = () => {
-  const [firstname, setFirstname] = useState(null);
-  const [lastname, setLastname] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
 
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   function onLogin() {
-    dispatch(setUser(`${firstname}  ${lastname}`));
+    dispatch(handleUserLogin({ username, password }));
   }
 
   return (
@@ -20,11 +22,11 @@ const Login = () => {
         <div className="col">
           <Form>
             <Form.Group className="mb-3">
-              <Form.Label>FirstName</Form.Label>
+              <Form.Label>Username</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter Firstname"
-                onChange={(e) => setFirstname(e.target.value)}
+                placeholder="Enter Username"
+                onChange={(e) => setUsername(e.target.value)}
               />
               <Form.Text className="text-muted">
                 We'll never share your data with anyone else.
@@ -32,11 +34,11 @@ const Login = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Lastname</Form.Label>
+              <Form.Label>Password</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Enter Lastname"
-                onChange={(e) => setLastname(e.target.value)}
+                type="password"
+                placeholder="Enter Password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
             <Button variant="primary" onClick={onLogin}>

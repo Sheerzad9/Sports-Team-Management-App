@@ -14,7 +14,6 @@ const MainMenuBar = () => {
   const navigate = useNavigate();
 
   const user = useSelector(({ user }) => {
-    console.log("This is from selector and the user is: ", user);
     return user;
   });
 
@@ -41,7 +40,7 @@ const MainMenuBar = () => {
           {user ? (
             <>
               <Navbar.Text>
-                Signed in as: <a href="#login">{user}</a>
+                Signed in as: <a href="#login">{user.name}</a>
               </Navbar.Text>
               <Navbar>
                 <Button onClick={handleLogout} variant="danger">
