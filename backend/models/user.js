@@ -7,12 +7,13 @@ const userSchema = mongoose.Schema({
       3,
       "Username is too short! Username should contain atleast 3 characters",
     ],
+    required: true,
   },
-  name: String,
-  email: String,
-  passwordHash: String,
-  role: { type: String, default: "Player" },
-  birthDay: String,
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  passwordHash: { type: String, required: true },
+  role: { type: String, default: "Player", required: true },
+  birthDay: { type: String, required: true },
 });
 
 userSchema.set("toJSON", {
