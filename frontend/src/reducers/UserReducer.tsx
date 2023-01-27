@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { setNotification } from "../reducers/NotificationReducer";
 import * as authenticationModels from "../models/AuthModels";
 import * as authenticationService from "../services/authenticate";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   username: string;

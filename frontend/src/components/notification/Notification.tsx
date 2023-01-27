@@ -8,7 +8,6 @@ interface Notification {
 
 const Notification = () => {
   const notification: Notification = useSelector(({ notification }) => {
-    console.log("Notification: ", notification);
     return notification;
   });
 
