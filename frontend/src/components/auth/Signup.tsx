@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleUserSignup } from "../../reducers/UserReducer";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store";
+import store, { AppDispatch } from "../../store";
 import * as authenticationModels from "../../models/AuthModels";
 import "./Signup.css";
 
@@ -11,6 +11,13 @@ const Signup = () => {
   useEffect(() => {
     setRole("Player");
   }, []);
+
+  const navigate = useNavigate();
+  // Subcribing so we can redirect after successful login
+  store.subscribe(() => {
+    const { user } = store.getState();
+    if (user) navigate("/");
+  });
 
   const [username, setUsername] = useState(null);
   const [name, setName] = useState(null);
@@ -75,13 +82,14 @@ const Signup = () => {
 
     setErrors(errs);
     setErrFields(errFields);
+    return errs.length === 0;
   };
 
   const handleSignup = (e) => {
     e.preventDefault();
-    validate();
+    const isValid = validate();
 
-    if (!formContainsErrors) {
+    if (isValid) {
       let signUpData: authenticationModels.SignUpData;
       signUpData = {
         name,

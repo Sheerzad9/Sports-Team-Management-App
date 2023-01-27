@@ -1,15 +1,23 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { handleUserLogin } from "../../reducers/UserReducer";
+import { useNavigate } from "react-router-dom";
+import store from "../../store";
 
 const Login = () => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
   const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
+  // Subcribing so we can redirect after successful login
+  store.subscribe(() => {
+    const { user } = store.getState();
+    if (user) navigate("/");
+  });
 
   function onLogin() {
     dispatch(handleUserLogin({ username, password }));
