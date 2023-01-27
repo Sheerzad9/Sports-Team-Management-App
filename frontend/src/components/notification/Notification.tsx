@@ -14,21 +14,15 @@ const Notification = () => {
 
   if (!notification.activeNotification) return;
 
-  const errorStyle = {
-    border: "solid red",
-    padding: 10,
-    borderWidth: 1,
-    color: "red",
-  };
-
-  const successStyle = {
-    border: "solid",
-    padding: 10,
-    borderWidth: 1,
-  };
-
   return (
-    <div style={notification.type === "error" ? errorStyle : successStyle}>
+    <div
+      className={
+        notification.type === "error"
+          ? "alert alert-danger"
+          : "alert alert-success"
+      }
+      role="alert"
+    >
       {notification.message}
     </div>
   );

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../reducers/UserReducer";
 import { AppDispatch } from "../../store";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";

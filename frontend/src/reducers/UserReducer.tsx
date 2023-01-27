@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { tokenToString } from "typescript";
 import { setNotification } from "../reducers/NotificationReducer";
+import * as authenticationModels from "../models/AuthModels";
 import * as authenticationService from "../services/authenticate";
 
 interface User {
@@ -27,7 +27,7 @@ export const { setUser } = userSlice.actions;
 
 export default userSlice.reducer;
 
-export const handleUserLogin = (loginData: any) => {
+export const handleUserLogin = (loginData: authenticationModels.LoginData) => {
   return async function (dispatch) {
     const res: any = await authenticationService.login(loginData).catch((e) => {
       console.log("EXCEPTION: ", e);
@@ -35,20 +35,50 @@ export const handleUserLogin = (loginData: any) => {
       dispatch(
         setNotification(
           { type: "error", message: errorMessage, activeNotification: true },
-          5
+          15
         )
       );
     });
 
     if (res?.data) {
-      console.log("SUCCESS: ", res.data);
       const { token, message, user } = res.data;
       user.token = token;
       dispatch(setUser(user));
       dispatch(
         setNotification(
           { type: "success", message, activeNotification: true },
-          5
+          15
+        )
+      );
+    }
+  };
+};
+
+export const handleUserSignup = (
+  signUpData: authenticationModels.SignUpData
+) => {
+  return async function (dispatch) {
+    const res: any = await authenticationService
+      .signUp(signUpData)
+      .catch((e) => {
+        console.log("EXCEPTION: ", e);
+        const errorMessage = e.response.data.error;
+        dispatch(
+          setNotification(
+            { type: "error", message: errorMessage, activeNotification: true },
+            15
+          )
+        );
+      });
+
+    if (res?.data) {
+      const { token, message, user } = res.data;
+      user.token = token;
+      dispatch(setUser(user));
+      dispatch(
+        setNotification(
+          { type: "success", message, activeNotification: true },
+          15
         )
       );
     }
